@@ -57,9 +57,9 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 	return &msg
 }
 
-func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desired interface{}) bool {
+func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desired interface{}, delta bool) bool {
 	log := c.log
-	log.Trace("UpdateDeviceShadow productKey : ", productKey, " deviceName : ", deviceName, " desired : ", desired)
+	log.Trace("UpdateDeviceShadow productKey : ", productKey, " deviceName : ", deviceName, " desired : ", desired, " delta : ", delta)
 
 	shadowMessage := struct {
 		Method string `json:"method"`
@@ -78,7 +78,7 @@ func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desi
 		ProductKey:    tea.String(*productKey),
 		DeviceName:    tea.String(*deviceName),
 		ShadowMessage: tea.String(string(strShadowMessage)),
-		DeltaUpdate:   tea.Bool(true),
+		DeltaUpdate:   tea.Bool(delta),
 	}
 	runtime := &util.RuntimeOptions{}
 
