@@ -12,9 +12,9 @@ type ShadowMessage struct {
 	State struct {
 		Desired json.RawMessage `json:"desired"`
 	} `json:"state"`
-	Metadat struct {
+	Metadata struct {
 		Desired json.RawMessage `json:"desired"`
-	} `json:"metadat"`
+	} `json:"metadata"`
 	Timestamp int64 `json:"timestamp"`
 	Version   int   `json:"version"`
 }
