@@ -23,13 +23,13 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 	log := c.log
 	log.Trace("GetDeviceShadow productKey : ", productKey, " deviceName : ", deviceName)
 
-	aliIotClient := c.aliIotClient
 	request := &iot20180120.GetDeviceShadowRequest{
 		ProductKey: tea.String(*productKey),
 		DeviceName: tea.String(*deviceName),
 	}
 	runtime := &util.RuntimeOptions{}
 
+	aliIotClient := c.aliIotClient
 	ret, err := aliIotClient.GetDeviceShadowWithOptions(request, runtime)
 	if err != nil {
 		log.Error("GetDeviceShadow fail. err : ", err)
@@ -55,4 +55,45 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 		return nil
 	}
 	return &msg
+}
+
+func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desired interface{}) bool {
+	log := c.log
+	log.Trace("UpdateDeviceShadow productKey : ", productKey, " deviceName : ", deviceName, " desired : ", desired)
+
+	shadowMessage := struct {
+		Method string `json:"method"`
+		State  struct {
+			Desired interface{} `json:"desired"`
+		} `json:"state"`
+		Version int `json:"version"`
+	}{
+		Method:  "update",
+		Version: 0,
+	}
+	shadowMessage.State.Desired = desired
+	strShadowMessage, _ := json.Marshal(shadowMessage)
+
+	request := &iot20180120.UpdateDeviceShadowRequest{
+		ProductKey:    tea.String(*productKey),
+		DeviceName:    tea.String(*deviceName),
+		ShadowMessage: tea.String(string(strShadowMessage)),
+		DeltaUpdate:   tea.Bool(true),
+	}
+	runtime := &util.RuntimeOptions{}
+
+	aliIotClient := c.aliIotClient
+	ret, err := aliIotClient.UpdateDeviceShadowWithOptions(request, runtime)
+	if err != nil {
+		log.Error("UpdateDeviceShadow error. err : ", err)
+		return false
+	}
+	log.Trace("UpdateDeviceShadow result : ", ret)
+
+	if ret.Body == nil {
+		log.Info("UpdateDeviceShadow fail. ret : ", ret)
+		return false
+	}
+
+	return *ret.Body.Success
 }
