@@ -43,9 +43,15 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 	}
 
 	body := ret.Body
-	if body.ShadowMessage == nil {
+
+	if *body.Success == false {
 		log.Info("GetDeviceShadow fail. body : ", body)
 		return nil
+	}
+
+	if body.ShadowMessage == nil {
+		var m = ShadowMessage{}
+		return &m
 	}
 
 	var msg ShadowMessage
