@@ -38,14 +38,14 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 	log.Trace("GetDeviceShadow result : ", ret)
 
 	if ret.Body == nil {
-		log.Info("GetDeviceShadow fail. ret : ", ret)
+		log.Info("GetDeviceShadow ret.body is nil. ret : ", ret)
 		return nil
 	}
 
 	body := ret.Body
 
 	if *body.Success == false {
-		log.Info("GetDeviceShadow fail. body : ", body)
+		log.Info("GetDeviceShadow return false. body : ", body)
 		return nil
 	}
 
