@@ -97,7 +97,7 @@ func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desi
 	log.Trace("UpdateDeviceShadow result : ", ret)
 
 	if ret.Body == nil {
-		log.Info("UpdateDeviceShadow fail. ret : ", ret)
+		log.Info("UpdateDeviceShadow return body is nil. ret : ", ret)
 		return false
 	}
 
