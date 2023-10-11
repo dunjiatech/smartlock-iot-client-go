@@ -1,4 +1,4 @@
-module smartlock-iot-client
+module github.com/dunjiatech/smartlock-iot-client-go
 
 go 1.21.1
 
@@ -7,7 +7,7 @@ require (
 	github.com/alibabacloud-go/iot-20180120/v5 v5.2.0
 	github.com/alibabacloud-go/iot-api-gateway v1.0.2
 	github.com/alibabacloud-go/tea v1.2.1
-	github.com/alibabacloud-go/tea-utils v1.3.6
+	github.com/alibabacloud-go/tea-utils v1.4.5
 	github.com/alibabacloud-go/tea-utils/v2 v2.0.4
 	github.com/sirupsen/logrus v1.9.3
 )

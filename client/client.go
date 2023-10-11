@@ -1,8 +1,8 @@
 package client
 
 import (
-	"smartlock-iot-client/client/iot"
-	"smartlock-iot-client/client/living"
+	"github.com/dunjiatech/smartlock-iot-client-go/client/iot"
+	"github.com/dunjiatech/smartlock-iot-client-go/client/living"
 
 	"github.com/sirupsen/logrus"
 )
