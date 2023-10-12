@@ -23,12 +23,12 @@ type Client struct {
 	log *logrus.Entry
 }
 
-func CreateClient(appKey *string, appSecret *string, projectId *string) *Client {
+func CreateClient(appKey string, appSecret string, projectId string) *Client {
 	logrus.Trace("DJLIVING CreateClient. appKey : ", appKey, " appSecret : ", appSecret, " projectId : ", projectId)
 
 	aliConfig := new(aliIot.Config).
-		SetAppKey(*appKey).
-		SetAppSecret(*appSecret).
+		SetAppKey(appKey).
+		SetAppSecret(appSecret).
 		SetDomain("api.link.aliyun.com")
 
 	aliClient, err := aliIot.NewClient(aliConfig)
@@ -45,7 +45,7 @@ func CreateClient(appKey *string, appSecret *string, projectId *string) *Client 
 	})
 
 	client := Client{
-		projectId: *projectId,
+		projectId: projectId,
 		aliClient: aliClient,
 		log:       log,
 	}
