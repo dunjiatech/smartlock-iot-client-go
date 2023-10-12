@@ -2,6 +2,7 @@ package living
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 type ThingStatus struct {
@@ -9,7 +10,7 @@ type ThingStatus struct {
 	Time   int64 `json:"time"`
 }
 
-func (c *Client) GetThingStatus(productKey string, deviceName string) *ThingStatus {
+func (c *Client) GetThingStatus(productKey string, deviceName string) (*ThingStatus, error) {
 	log := c.log
 	log.Debug("GetThingStatus. produceKey : ", productKey, " deviceName : ", deviceName)
 
@@ -21,16 +22,16 @@ func (c *Client) GetThingStatus(productKey string, deviceName string) *ThingStat
 	data, err := c.doCheckRequest("/cloud/thing/status/get", "1.0.2", params)
 	if err != nil {
 		log.Error("GetThingStatus. doCheckRequest fail. err : ", err)
-		return nil
+		return nil, err
 	}
 
 	var ret ThingStatus
 	err = json.Unmarshal(data, &ret)
 	if err != nil {
 		log.Error("GetThingStatus. json.Unmarshal fail. err : ", err)
-		return nil
+		return nil, fmt.Errorf("json.Unmarshal fail")
 	}
 
 	log.Debug("GetThingStatus. result : ", ret)
-	return &ret
+	return &ret, nil
 }
