@@ -29,15 +29,15 @@ func createAliIotClient(accessKeyId *string, accessKeySecret *string) (_result *
 	}
 	// Endpoint 请参考 https://api.aliyun.com/product/Iot
 	config.Endpoint = tea.String("iot.cn-shanghai.aliyuncs.com")
-	_result = &iot20180120.Client{}
+	// _result = &iot20180120.Client{}
 	_result, _err = iot20180120.NewClient(config)
 	return _result, _err
 }
 
-func CreateClient(accessKeyId *string, accessKeySecret *string) *Client {
+func CreateClient(accessKeyId string, accessKeySecret string) *Client {
 	logrus.Trace("DJIOT CreateClient. accessKeyId : ", accessKeyId, " accessKeySecret : ", accessKeySecret)
 
-	aliIotClient, err := createAliIotClient(accessKeyId, accessKeySecret)
+	aliIotClient, err := createAliIotClient(&accessKeyId, &accessKeySecret)
 	if err != nil {
 		logrus.Error("DJIOT CreateClient fail. err : ", err, " accessKeyId : ", accessKeyId, " accessKeySecret : ", accessKeySecret)
 		return nil

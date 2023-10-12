@@ -13,7 +13,7 @@ type Client struct {
 	log          *logrus.Entry
 }
 
-func CreateClient(accessKeyId *string, accessKeySecret *string, appKey *string, appSecret *string, projectId *string) *Client {
+func CreateClient(accessKeyId string, accessKeySecret string, appKey string, appSecret string, projectId string) *Client {
 	logrus.Trace("DJSDK CreateClient. ")
 
 	iotClient := iot.CreateClient(accessKeyId, accessKeySecret)
@@ -38,7 +38,7 @@ func CreateClient(accessKeyId *string, accessKeySecret *string, appKey *string, 
 	return &client
 }
 
-func (c *Client) SetOpenMode(productKey *string, deviceName *string, mode int) bool {
+func (c *Client) SetOpenMode(productKey string, deviceName string, mode int) bool {
 	log := c.log
 	log.Trace("SetOpenMode mode : ", mode)
 
@@ -51,7 +51,7 @@ func (c *Client) SetOpenMode(productKey *string, deviceName *string, mode int) b
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
 
-func (c *Client) SetAdminPassword(productKey *string, deviceName *string, passsword string) bool {
+func (c *Client) SetAdminPassword(productKey string, deviceName string, passsword string) bool {
 	log := c.log
 	log.Trace("SetAdminPassword. ")
 

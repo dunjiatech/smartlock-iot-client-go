@@ -19,13 +19,13 @@ type ShadowMessage struct {
 	Version   int   `json:"version"`
 }
 
-func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *ShadowMessage {
+func (c *Client) GetDeviceShadow(productKey string, deviceName string) *ShadowMessage {
 	log := c.log
 	log.Trace("GetDeviceShadow productKey : ", productKey, " deviceName : ", deviceName)
 
 	request := &iot20180120.GetDeviceShadowRequest{
-		ProductKey: tea.String(*productKey),
-		DeviceName: tea.String(*deviceName),
+		ProductKey: tea.String(productKey),
+		DeviceName: tea.String(deviceName),
 	}
 	runtime := &util.RuntimeOptions{}
 
@@ -63,7 +63,7 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 	return &msg
 }
 
-func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desired interface{}, version int, delta bool) bool {
+func (c *Client) UpdateDeviceShadow(productKey string, deviceName string, desired interface{}, version int, delta bool) bool {
 	log := c.log
 	log.Trace("UpdateDeviceShadow productKey : ", productKey, " deviceName : ", deviceName, " desired : ", desired, " delta : ", delta)
 
@@ -81,8 +81,8 @@ func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desi
 	strShadowMessage, _ := json.Marshal(shadowMessage)
 
 	request := &iot20180120.UpdateDeviceShadowRequest{
-		ProductKey:    tea.String(*productKey),
-		DeviceName:    tea.String(*deviceName),
+		ProductKey:    tea.String(productKey),
+		DeviceName:    tea.String(deviceName),
 		ShadowMessage: tea.String(string(strShadowMessage)),
 		DeltaUpdate:   tea.Bool(delta),
 	}
@@ -104,7 +104,7 @@ func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desi
 	return *ret.Body.Success
 }
 
-func (c *Client) UpdateDeviceShadowEx(productKey *string, deviceName *string, desired interface{}, delta bool) bool {
+func (c *Client) UpdateDeviceShadowEx(productKey string, deviceName string, desired interface{}, delta bool) bool {
 	m := c.GetDeviceShadow(productKey, deviceName)
 	if m == nil {
 		return false

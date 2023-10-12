@@ -1,6 +1,6 @@
 package client
 
-func (c *Client) SetTenantPwd1(productKey *string, deviceName *string, passsword string) bool {
+func (c *Client) SetTenantPwd1(productKey string, deviceName string, passsword string) bool {
 	log := c.log
 	log.Trace("SetTenantPassword1. ")
 
@@ -13,7 +13,7 @@ func (c *Client) SetTenantPwd1(productKey *string, deviceName *string, passsword
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
 
-func (c *Client) SetTenantPwd2(productKey *string, deviceName *string, passsword string) bool {
+func (c *Client) SetTenantPwd2(productKey string, deviceName string, passsword string) bool {
 	log := c.log
 	log.Trace("SetTenantPassword2. ")
 
@@ -26,7 +26,7 @@ func (c *Client) SetTenantPwd2(productKey *string, deviceName *string, passsword
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
 
-func (c *Client) ClearAllTenantPwd(productKey *string, deviceName *string) bool {
+func (c *Client) ClearAllTenantPwd(productKey string, deviceName string) bool {
 	log := c.log
 	log.Trace("ClearAllTenantPwd. ")
 
