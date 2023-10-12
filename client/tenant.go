@@ -40,3 +40,31 @@ func (c *Client) ClearAllTenantPwd(productKey string, deviceName string) bool {
 
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
+
+func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId string, passsword string) bool {
+	log := c.log
+	log.Trace("TenantCheckIn. ")
+
+	desired := struct {
+		TenantId string `json:"prh_tenant_id"`
+		Pwd1     string `json:"prh_tenant_pwd_1"`
+	}{
+		TenantId: tenantId,
+		Pwd1:     passsword,
+	}
+
+	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
+}
+
+func (c *Client) TenantCheckOut(productKey string, deviceName string) bool {
+	log := c.log
+	log.Trace("TenantCheckIn. ")
+
+	desired := struct {
+		TenantId string `json:"prh_tenant_id"`
+	}{
+		TenantId: "",
+	}
+
+	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
+}
