@@ -24,7 +24,7 @@ type Client struct {
 }
 
 func CreateClient(appKey *string, appSecret *string, projectId *string) *Client {
-	logrus.Debug("DJLIVING CreateClient. appKey : ", appKey, " appSecret : ", appSecret, " projectId : ", projectId)
+	logrus.Trace("DJLIVING CreateClient. appKey : ", appKey, " appSecret : ", appSecret, " projectId : ", projectId)
 
 	aliConfig := new(aliIot.Config).
 		SetAppKey(*appKey).

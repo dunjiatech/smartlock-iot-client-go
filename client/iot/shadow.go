@@ -63,7 +63,7 @@ func (c *Client) GetDeviceShadow(productKey *string, deviceName *string) *Shadow
 	return &msg
 }
 
-func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desired interface{}, delta bool) bool {
+func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desired interface{}, version int, delta bool) bool {
 	log := c.log
 	log.Trace("UpdateDeviceShadow productKey : ", productKey, " deviceName : ", deviceName, " desired : ", desired, " delta : ", delta)
 
@@ -75,7 +75,7 @@ func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desi
 		Version int `json:"version"`
 	}{
 		Method:  "update",
-		Version: 0,
+		Version: version,
 	}
 	shadowMessage.State.Desired = desired
 	strShadowMessage, _ := json.Marshal(shadowMessage)
@@ -102,4 +102,13 @@ func (c *Client) UpdateDeviceShadow(productKey *string, deviceName *string, desi
 	}
 
 	return *ret.Body.Success
+}
+
+func (c *Client) UpdateDeviceShadowEx(productKey *string, deviceName *string, desired interface{}, delta bool) bool {
+	m := c.GetDeviceShadow(productKey, deviceName)
+	if m == nil {
+		return false
+	}
+	version := (m.Version + 11) / 10 * 10
+	return c.UpdateDeviceShadow(productKey, deviceName, desired, version, delta)
 }

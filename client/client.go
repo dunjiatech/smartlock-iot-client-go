@@ -37,3 +37,16 @@ func CreateClient(accessKeyId *string, accessKeySecret *string, appKey *string, 
 
 	return &client
 }
+
+func (c *Client) SetOpenMode(productKey *string, deviceName *string, mode int) bool {
+	log := c.log
+	log.Trace("SetOpenMode mode : ", mode)
+
+	m := struct {
+		OpenMode int `json:"open_mode"`
+	}{
+		OpenMode: mode,
+	}
+
+	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, m, true)
+}
