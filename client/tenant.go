@@ -18,7 +18,7 @@ func (c *Client) SetTenantPassword(productKey string, deviceName string, index i
 	return false
 }
 
-func (c *Client) ClearAllTenantPwd(productKey string, deviceName string) bool {
+func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) bool {
 	log := c.log
 	log.Trace("ClearAllTenantPwd. ")
 
