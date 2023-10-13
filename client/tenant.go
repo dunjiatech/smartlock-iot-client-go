@@ -26,8 +26,8 @@ func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) bo
 		Pwd1 string `json:"prh_tenant_pwd_1"`
 		Pwd2 string `json:"prh_tenant_pwd_2"`
 	}{
-		Pwd1: "",
-		Pwd2: "",
+		Pwd1: "-",
+		Pwd2: "-",
 	}
 
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
@@ -55,7 +55,7 @@ func (c *Client) TenantCheckOut(productKey string, deviceName string) bool {
 	desired := struct {
 		TenantId string `json:"prh_tenant_id"`
 	}{
-		TenantId: "",
+		TenantId: "-",
 	}
 
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
