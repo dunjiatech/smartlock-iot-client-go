@@ -9,7 +9,12 @@ const maxTenantPwdIndex int = 20
 
 func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, password string) (bool, error) {
 	log := c.log
-	log.Trace("SetTenantPassword. index : ", index, " password: ", password)
+	log.Trace("SetTenantPassword.")
+
+	if !isPwdLegal(password) {
+		log.Warnf("SetTenantPassword password illegality. password : %s", password)
+		return false, fmt.Errorf("illegality password")
+	}
 
 	if index >= 1 && index <= maxTenantPwdIndex {
 		desired := make(map[string]interface{})

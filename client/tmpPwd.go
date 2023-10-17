@@ -15,6 +15,11 @@ func (c *Client) SetTmpPassword(productKey string, deviceName string, index int,
 	log := c.log
 	log.Trace("SetTmpPassword. ")
 
+	if !isPwdLegal(password) {
+		log.Warnf("SetTmpPassword password illegality. password : %s", password)
+		return false, fmt.Errorf("illegality password")
+	}
+
 	if index >= 1 && index <= 10 {
 		desired := make(map[string]interface{})
 
