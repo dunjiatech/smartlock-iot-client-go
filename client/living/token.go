@@ -9,7 +9,7 @@ type Token struct {
 	ExpireIn   int64  `json:"expireIn"`
 }
 
-func (c *Client) getToken() *Token {
+func (c *Client) getToken() (*Token, error) {
 	log := c.log
 	log.Trace("getToken")
 
@@ -20,16 +20,16 @@ func (c *Client) getToken() *Token {
 
 	data, err := c.doRequest("/cloud/token", "1.0.1", "", params)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	var ret Token
 	err = json.Unmarshal(data, &ret)
 	if err != nil {
 		log.Error("getToken. json.Unmarshal fail. err : ", err)
-		return nil
+		return nil, err
 	}
 
 	log.Debug("getToken. result : ", ret)
-	return &ret
+	return &ret, nil
 }

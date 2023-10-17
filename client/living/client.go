@@ -59,9 +59,9 @@ func (c *Client) checkToken() error {
 	token := &c.token
 	curMilli := time.Now().UnixMilli()
 	if (curMilli - token.BeginTime) > token.ExpiresIn/2 {
-		ret := c.getToken()
+		ret, err := c.getToken()
 		if ret == nil {
-			return fmt.Errorf("GetToken fail")
+			return err
 		}
 
 		token.CloudToken = ret.CloudToken
