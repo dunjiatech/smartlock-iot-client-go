@@ -1,6 +1,9 @@
 package client
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type TmpPwdTimeLimit struct {
 	Date    [2][3]int `json:"date"`
@@ -12,30 +15,17 @@ func (c *Client) SetTmpPassword(productKey string, deviceName string, index int,
 	log := c.log
 	log.Trace("SetTmpPassword. ")
 
-	switch index {
-	case 1:
-		desired := struct {
-			Pwd      string      `json:"prh_tmp_pwd_1"`
-			TmLimit  interface{} `json:"prh_tmp_pwd_tm_limit_1"`
-			CntLimit int         `json:"prh_tmp_pwd_cnt_limit_1"`
-		}{
-			Pwd:      password,
-			TmLimit:  tmLimit,
-			CntLimit: cntLimit,
-		}
-		return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
-	case 2:
-		desired := struct {
-			Pwd      string      `json:"prh_tmp_pwd_2"`
-			TmLimit  interface{} `json:"prh_tmp_pwd_tm_limit_2"`
-			CntLimit int         `json:"prh_tmp_pwd_cnt_limit_2"`
-		}{
-			Pwd:      password,
-			TmLimit:  tmLimit,
-			CntLimit: cntLimit,
-		}
+	if index >= 1 && index <= 10 {
+		desired := make(map[string]interface{})
+
+		strIndex := strconv.Itoa(index)
+		desired["prh_tmp_pwd_"+strIndex] = password
+		desired["prh_tmp_pwd_tm_limit_"+strIndex] = tmLimit
+		desired["prh_tmp_pwd_cnt_limit_"+strIndex] = cntLimit
+
 		return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 	}
 
-	return false, fmt.Errorf("unsupported index, index : ", index)
+	log.Warnf("SetTmpPassword. unsupported index, [1, 10] index : ", index)
+	return false, fmt.Errorf("unsupported index, [1, 10] index : ", index)
 }

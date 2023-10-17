@@ -1,35 +1,37 @@
 package client
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
-func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, passsword string) (bool, error) {
+const maxTenantPwdIndex int = 20
+
+func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, password string) (bool, error) {
 	log := c.log
-	log.Trace("SetTenantPassword. index : ", index, " password: ", passsword)
+	log.Trace("SetTenantPassword. index : ", index, " password: ", password)
 
-	switch index {
-	case 1:
-		return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, struct {
-			Pwd string `json:"prh_tenant_pwd_1"`
-		}{Pwd: passsword}, true)
-	case 2:
-		return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, struct {
-			Pwd string `json:"prh_tenant_pwd_2"`
-		}{Pwd: passsword}, true)
+	if index >= 1 && index <= maxTenantPwdIndex {
+		desired := make(map[string]interface{})
+
+		strIndex := strconv.Itoa(index)
+		desired["prh_tenant_pwd_"+strIndex] = password
+
+		return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 	}
 
-	return false, fmt.Errorf("unsupported index, index : ", index)
+	log.Warnf("SetTenantPassword. unsupported index, [1, %d] index : %d", maxTenantPwdIndex, index)
+	return false, fmt.Errorf("unsupported index, [1, %d] index : %d", maxTenantPwdIndex, index)
 }
 
 func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) (bool, error) {
 	log := c.log
 	log.Trace("ClearAllTenantPwd. ")
 
-	desired := struct {
-		Pwd1 string `json:"prh_tenant_pwd_1"`
-		Pwd2 string `json:"prh_tenant_pwd_2"`
-	}{
-		Pwd1: "-",
-		Pwd2: "-",
+	desired := make(map[string]interface{})
+	for i := 1; i <= maxTenantPwdIndex; i++ {
+		s := strconv.Itoa(i)
+		desired["prh_tenant_pwd_"+s] = "-"
 	}
 
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
