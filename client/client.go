@@ -13,16 +13,16 @@ type Client struct {
 	log          *logrus.Entry
 }
 
-func CreateClient(accessKeyId string, accessKeySecret string, appKey string, appSecret string, projectId string) *Client {
+func CreateClient(accessKeyId string, accessKeySecret string, appKey string, appSecret string, projectId string) (*Client, error) {
 	logrus.Trace("DJSDK CreateClient. ")
 
-	iotClient := iot.CreateClient(accessKeyId, accessKeySecret)
+	iotClient, err0 := iot.CreateClient(accessKeyId, accessKeySecret)
 	if iotClient == nil {
-		return nil
+		return nil, err0
 	}
-	livingClient := living.CreateClient(appKey, appSecret, projectId)
+	livingClient, err1 := living.CreateClient(appKey, appSecret, projectId)
 	if livingClient == nil {
-		return nil
+		return nil, err1
 	}
 
 	log := logrus.WithFields(logrus.Fields{
@@ -35,5 +35,5 @@ func CreateClient(accessKeyId string, accessKeySecret string, appKey string, app
 		log:          log,
 	}
 
-	return &client
+	return &client, nil
 }

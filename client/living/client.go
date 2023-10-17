@@ -23,7 +23,7 @@ type Client struct {
 	log *logrus.Entry
 }
 
-func CreateClient(appKey string, appSecret string, projectId string) *Client {
+func CreateClient(appKey string, appSecret string, projectId string) (*Client, error) {
 	logrus.Trace("DJLIVING CreateClient. appKey : ", appKey, " appSecret : ", appSecret, " projectId : ", projectId)
 
 	aliConfig := new(aliIot.Config).
@@ -34,7 +34,7 @@ func CreateClient(appKey string, appSecret string, projectId string) *Client {
 	aliClient, err := aliIot.NewClient(aliConfig)
 	if err != nil {
 		logrus.Error("DJLIVING aliIot.NewClient fail. err : ", err)
-		return nil
+		return nil, err
 	}
 
 	log := logrus.WithFields(logrus.Fields{
@@ -49,7 +49,7 @@ func CreateClient(appKey string, appSecret string, projectId string) *Client {
 		aliClient: aliClient,
 		log:       log,
 	}
-	return &client
+	return &client, nil
 }
 
 func (c *Client) checkToken() error {

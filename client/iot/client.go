@@ -34,13 +34,13 @@ func createAliIotClient(accessKeyId *string, accessKeySecret *string) (_result *
 	return _result, _err
 }
 
-func CreateClient(accessKeyId string, accessKeySecret string) *Client {
+func CreateClient(accessKeyId string, accessKeySecret string) (*Client, error) {
 	logrus.Trace("DJIOT CreateClient. accessKeyId : ", accessKeyId, " accessKeySecret : ", accessKeySecret)
 
 	aliIotClient, err := createAliIotClient(&accessKeyId, &accessKeySecret)
 	if err != nil {
 		logrus.Error("DJIOT CreateClient fail. err : ", err, " accessKeyId : ", accessKeyId, " accessKeySecret : ", accessKeySecret)
-		return nil
+		return nil, err
 	}
 
 	log := logrus.WithFields(logrus.Fields{
@@ -53,5 +53,5 @@ func CreateClient(accessKeyId string, accessKeySecret string) *Client {
 		aliIotClient: aliIotClient,
 		log:          log,
 	}
-	return &client
+	return &client, nil
 }
