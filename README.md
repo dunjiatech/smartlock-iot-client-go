@@ -201,7 +201,7 @@ func (c *Client) SetTenantPassword(productKey string, deviceName string, index i
 | ---------- | ------ | :-------------------------------------------- |
 | productKey | string | 产品id                                        |
 | deviceName | string | 设备id                                        |
-| index      | int    | 密码序号。目前支持传入：1、2                  |
+| index      | int    | 密码序号，1～20                               |
 | passsword  | string | 密码只能传入6～12位的数字字符串，如：“123456” |
 
 **返回数据**
@@ -237,10 +237,10 @@ func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) (b
 
 
 
-### func (*Client) SetTmpPassword1
+### func (*Client) SetTmpPassword
 
 ```
-func (c *Client) SetTmpPassword1(productKey string, deviceName string, password string, cntLimit int, tmLimit *TmpPwdTimeLimit) (bool, error) 
+func (c *Client) SetTmpPassword1(productKey string, deviceName string, index int, password string, cntLimit int, tmLimit *TmpPwdTimeLimit) (bool, error) 
 ```
 
 设置1号临时密码
@@ -251,33 +251,7 @@ func (c *Client) SetTmpPassword1(productKey string, deviceName string, password 
 | ---------- | ---------------- | :----------------------------------------------- |
 | productKey | string           | 产品id                                           |
 | deviceName | string           | 设备id                                           |
-| password   | string           | 密码只能传入6～12位的数字字符串，如：“123456”    |
-| cntLimit   | int              | 密码使用次数                                     |
-| tmLimit    | *TmpPwdTimeLimit | 见《type TmpPwdTimeLimit》章节，密码使用时间限制 |
-
-**返回数据**
-
-| 名称         | 类型  | 描述                          |
-| ------------ | ----- | :---------------------------- |
-| 是否设置成功 | bool  | true : 成功<br />false : 失败 |
-| 失败信息     | error |                               |
-
-
-
-### func (*Client) SetTmpPassword2
-
-```
-func (c *Client) SetTmpPassword2(productKey string, deviceName string, password string, cntLimit int, tmLimit *TmpPwdTimeLimit) (bool, error) 
-```
-
-设置2号临时密码
-
-**请求参数**
-
-| 名称       | 类型             | 描述                                             |
-| ---------- | ---------------- | :----------------------------------------------- |
-| productKey | string           | 产品id                                           |
-| deviceName | string           | 设备id                                           |
+| index      | Index            | 临时密码序号，1～10                              |
 | password   | string           | 密码只能传入6～12位的数字字符串，如：“123456”    |
 | cntLimit   | int              | 密码使用次数                                     |
 | tmLimit    | *TmpPwdTimeLimit | 见《type TmpPwdTimeLimit》章节，密码使用时间限制 |
