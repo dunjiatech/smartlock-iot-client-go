@@ -6,7 +6,7 @@ type TmpPwdTimeLimit struct {
 	WeekMap int       `json:"week_map"`
 }
 
-func (c *Client) SetTmpPwd1(productKey string, deviceName string, pwd string, cntLimit int, tmLimit *TmpPwdTimeLimit) bool {
+func (c *Client) SetTmpPwd1(productKey string, deviceName string, pwd string, cntLimit int, tmLimit *TmpPwdTimeLimit) (bool, error) {
 	log := c.log
 	log.Trace("SetTmpPwd1. ")
 
@@ -23,7 +23,7 @@ func (c *Client) SetTmpPwd1(productKey string, deviceName string, pwd string, cn
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
 
-func (c *Client) SetTmpPwd2(productKey string, deviceName string, pwd string, cntLimit int, tmLimit *TmpPwdTimeLimit) bool {
+func (c *Client) SetTmpPwd2(productKey string, deviceName string, pwd string, cntLimit int, tmLimit *TmpPwdTimeLimit) (bool, error) {
 	log := c.log
 	log.Trace("SetTmpPwd2. ")
 

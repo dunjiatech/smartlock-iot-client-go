@@ -1,6 +1,8 @@
 package client
 
-func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, passsword string) bool {
+import "fmt"
+
+func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, passsword string) (bool, error) {
 	log := c.log
 	log.Trace("SetTenantPassword. index : ", index, " password: ", passsword)
 
@@ -15,10 +17,10 @@ func (c *Client) SetTenantPassword(productKey string, deviceName string, index i
 		}{Pwd: passsword}, true)
 	}
 
-	return false
+	return false, fmt.Errorf("unsupported index, index : ", index)
 }
 
-func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) bool {
+func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) (bool, error) {
 	log := c.log
 	log.Trace("ClearAllTenantPwd. ")
 
@@ -33,7 +35,7 @@ func (c *Client) ClearAllTenantPassword(productKey string, deviceName string) bo
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
 
-func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId string, passsword string) bool {
+func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId string, passsword string) (bool, error) {
 	log := c.log
 	log.Trace("TenantCheckIn. ")
 
@@ -48,7 +50,7 @@ func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId st
 	return c.IotClient.UpdateDeviceShadowEx(productKey, deviceName, desired, true)
 }
 
-func (c *Client) TenantCheckOut(productKey string, deviceName string) bool {
+func (c *Client) TenantCheckOut(productKey string, deviceName string) (bool, error) {
 	log := c.log
 	log.Trace("TenantCheckOut. ")
 

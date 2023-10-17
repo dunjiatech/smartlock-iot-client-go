@@ -1,6 +1,6 @@
 package client
 
-func (c *Client) SetAdminPassword(productKey string, deviceName string, passsword string) bool {
+func (c *Client) SetAdminPassword(productKey string, deviceName string, passsword string) (bool, error) {
 	log := c.log
 	log.Trace("SetAdminPassword. ")
 

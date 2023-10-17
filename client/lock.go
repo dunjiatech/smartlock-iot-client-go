@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func (c *Client) SetOpenMode(productKey string, deviceName string, mode int) bool {
+func (c *Client) SetOpenMode(productKey string, deviceName string, mode int) (bool, error) {
 	log := c.log
 	log.Trace("SetOpenMode mode : ", mode)
 
