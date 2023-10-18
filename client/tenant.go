@@ -46,6 +46,10 @@ func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId st
 	log := c.log
 	log.Trace("TenantCheckIn. ")
 
+	if len(tenantId) <= 0 {
+		return false, fmt.Errorf("tenantId cannot empty")
+	}
+
 	desired := struct {
 		TenantId string `json:"prh_tenant_id"`
 		Pwd1     string `json:"prh_tenant_pwd_1"`

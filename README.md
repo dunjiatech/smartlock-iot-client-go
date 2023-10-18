@@ -88,20 +88,21 @@ func (c *Client) GetLockStatus(productKey string, deviceName string) (int, error
 
 
 
-### func (*Client) GetBattery0Status
+### func (*Client) GetBatteryStatus
 
 ```
-func (c *Client) GetBattery0Status(productKey string, deviceName string) (*BatteryStatus, error) 
+func (c *Client) GetBatteryStatus(productKey string, deviceName string, index int) (*BatteryStatus, error) 
 ```
 
 调用该接口获取0号电池状态
 
 **请求参数**
 
-| 名称       | 类型   | 描述   |
-| ---------- | ------ | :----- |
-| productKey | string | 产品id |
-| deviceName | string | 设备id |
+| 名称       | 类型   | 描述           |
+| ---------- | ------ | :------------- |
+| productKey | string | 产品id         |
+| deviceName | string | 设备id         |
+| index      | int    | 电池序号，0，1 |
 
 **返回数据**
 
