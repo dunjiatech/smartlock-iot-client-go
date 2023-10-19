@@ -65,9 +65,9 @@ func (c *Client) GetBatteryStatus(productKey string, deviceName string, index in
 	}
 	for _, p := range *props {
 		if p.Attribute == inplaceName {
-			var value bool
+			var value int
 			json.Unmarshal(p.Value, &value)
-			batteryStatus.Inplace = value
+			batteryStatus.Inplace = value != 0
 		} else if p.Attribute == voltageName {
 			var value int
 			json.Unmarshal(p.Value, &value)
