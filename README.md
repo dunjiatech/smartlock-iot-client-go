@@ -2,6 +2,33 @@
 
 # 遁甲门锁服务API参考
 
+## type BatteryStatus
+
+电池状态
+
+```
+type BatteryStatus struct {
+	Inplace bool		// 是否在位。 true:在位；false:不在位
+	Voltage int     // 电量百分比
+}
+```
+
+
+
+## type TmpPwdTimeLimit
+
+临时密码时间限制
+
+```
+type TmpPwdTimeLimit struct {
+	Date    [2][3]int `json:"date"`					// 开始结束年月日，如：{{2023, 10, 10}, {2023, 10, 11}}
+	Minutes [2]int    `json:"minutes"`      // 一天的分钟数，{0, 1439} ： 全天有效
+	WeekMap int       `json:"week_map"`     // 星期位图，127 ： 7天有效
+}
+```
+
+
+
 ## type Client
 
 ```
@@ -263,31 +290,3 @@ func (c *Client) SetTmpPassword1(productKey string, deviceName string, index int
 | ------------ | ----- | :---------------------------- |
 | 是否设置成功 | bool  | true : 成功<br />false : 失败 |
 | 失败信息     | error |                               |
-
-
-
-## type BatteryStatus
-
-电池状态
-
-```
-type BatteryStatus struct {
-	Inplace bool		// 是否在位。 true:在位；false:不在位
-	Voltage int     // 电量百分比
-}
-```
-
-
-
-## type TmpPwdTimeLimit
-
-临时密码时间限制
-
-```
-type TmpPwdTimeLimit struct {
-	Date    [2][3]int `json:"date"`					// 开始结束年月日，如：{{2023, 10, 10}, {2023, 10, 11}}
-	Minutes [2]int    `json:"minutes"`      // 一天的分钟数，{0, 1439} ： 全天有效
-	WeekMap int       `json:"week_map"`     // 星期位图，127 ： 7天有效
-}
-```
-
