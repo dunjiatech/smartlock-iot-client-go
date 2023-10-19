@@ -116,7 +116,7 @@ func (c *Client) GetBatteryStatus(productKey string, deviceName string, index in
 ### func (*Client) SetAdminPassword
 
 ```
-func (c *Client) SetAdminPassword(productKey string, deviceName string, passsword string) (bool, error) 
+func (c *Client) SetAdminPassword(productKey string, deviceName string, password string) (bool, error) 
 ```
 
 设置管理员密码
@@ -127,7 +127,7 @@ func (c *Client) SetAdminPassword(productKey string, deviceName string, passswor
 | ---------- | ------ | :-------------------------------------------- |
 | productKey | string | 产品id                                        |
 | deviceName | string | 设备id                                        |
-| passsword  | string | 密码只能传入6～12位的数字字符串，如：“123456” |
+| password   | string | 密码只能传入6～12位的数字字符串，如：“123456” |
 
 **返回数据**
 
@@ -141,7 +141,7 @@ func (c *Client) SetAdminPassword(productKey string, deviceName string, passswor
 ### func (*Client) TenantCheckIn
 
 ```
-func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId string, passsword string) (bool, error)
+func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId string, password string) (bool, error)
 ```
 
 租户入住
@@ -153,7 +153,7 @@ func (c *Client) TenantCheckIn(productKey string, deviceName string, tenantId st
 | productKey | string | 产品id                                        |
 | deviceName | string | 设备id                                        |
 | tenantId   | string | 租户id                                        |
-| passsword  | string | 密码只能传入6～12位的数字字符串，如：“123456” |
+| password   | string | 密码只能传入6～12位的数字字符串，如：“123456” |
 
 **返回数据**
 
@@ -191,7 +191,7 @@ func (c *Client) TenantCheckOut(productKey string, deviceName string) (bool, err
 ### func (*Client) SetTenantPassword
 
 ```
-func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, passsword string) (bool, error)
+func (c *Client) SetTenantPassword(productKey string, deviceName string, index int, password string) (bool, error)
 ```
 
 设置租户密码
@@ -203,7 +203,7 @@ func (c *Client) SetTenantPassword(productKey string, deviceName string, index i
 | productKey | string | 产品id                                        |
 | deviceName | string | 设备id                                        |
 | index      | int    | 密码序号，1～20                               |
-| passsword  | string | 密码只能传入6～12位的数字字符串，如：“123456” |
+| password   | string | 密码只能传入6～12位的数字字符串，如：“123456” |
 
 **返回数据**
 
